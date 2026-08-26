@@ -1,0 +1,15 @@
+---
+description: AcmePay partner-dashboard-vue conventions
+globs:
+  - "**/*.{ts,vue}"
+alwaysApply: true
+---
+
+# partner-dashboard-vue rules
+
+- Domain: AcmePay (fictional). No StarsPay branding.
+- Money: integer minor units to API. Display via `src/lib/money.ts`.
+- Contract: `Docs/specs/API_CONTRACT.md`, `error-codes.md`.
+- API calls in composables, not scattered in views.
+- Skill: `.cursor/skills/vue-api-composable/SKILL.md`.
+- Spec first → implement → Vitest → update spec checkboxes.

@@ -1,0 +1,11 @@
+# dependencies
+node_modules
+dist
+*.tsbuildinfo
+
+# env
+.env
+.env.local
+
+# logs
+npm-debug.log*
