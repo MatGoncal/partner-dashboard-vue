@@ -21,11 +21,21 @@ npm run dev
 
 Open http://localhost:5173 — demo API key: `demo-partner-key` (see `.env.example`).
 
-Point to real Laravel API:
+Point to real Laravel or Nest API:
 
 ```bash
-VITE_API_BASE=http://localhost/v1 npm run dev
+VITE_API_BASE_URL=http://localhost/v1 npm run dev
 ```
+
+## Demo credentials
+
+The default `VITE_API_KEY=demo-partner-key` is a **portfolio demo key** shipped for
+local mock and preview environments. It is not a production secret.
+
+In production, partner credentials should never live in the browser bundle. The
+[checkout-portal-next](../checkout-portal-next/) BFF pattern keeps `API_KEY`
+server-side and proxies same-origin `/api/v1/*` routes; this dashboard would
+follow the same approach in a real deployment.
 
 ## Scripts
 
@@ -39,8 +49,9 @@ VITE_API_BASE=http://localhost/v1 npm run dev
 
 ## Deploy (Vercel)
 
-`vercel.json` runs the static build; set `VITE_API_BASE` to your Laravel URL or
-leave empty to use the bundled mock via proxy in preview.
+`vercel.json` runs the static build. Set `VITE_API_BASE_URL` to your API origin
+(e.g. `https://api.example.com/v1`) or leave empty to rely on the Vite dev proxy
+to the bundled mock in preview.
 
 ## Docs for agents
 

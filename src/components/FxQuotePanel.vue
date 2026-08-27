@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import CountdownTimer from '@/components/CountdownTimer.vue';
-import { formatMoney } from '@/lib/money';
+import { formatMoney, parseDecimalToMinorUnits } from '@/lib/money';
 import type { FxQuote } from '@/types/api';
 
 defineProps<{
@@ -22,8 +22,8 @@ function onSubmit(event: Event): void {
   event.preventDefault();
   const form = event.target as HTMLFormElement;
   const amountRaw = (form.elements.namedItem('amount') as HTMLInputElement).value;
-  const minor = Math.round(Number(amountRaw.replace(',', '.')) * 100);
-  if (!Number.isFinite(minor) || minor <= 0) return;
+  const minor = parseDecimalToMinorUnits(amountRaw, sourceCurrency);
+  if (minor === null || minor <= 0) return;
 
   emit('submit', {
     source_currency: sourceCurrency,

@@ -8,6 +8,7 @@ describe('money helpers', () => {
 
   it('parses decimal input to minor units', () => {
     expect(parseDecimalToMinorUnits('15.00', 'BRL')).toBe(1500);
+    expect(parseDecimalToMinorUnits('99.99', 'BRL')).toBe(9999);
     expect(parseDecimalToMinorUnits('', 'BRL')).toBeNull();
   });
 });
