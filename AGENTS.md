@@ -45,6 +45,7 @@ AcmePay v1 contract (`Docs/specs/API_CONTRACT.md`). Targets `pix-wallet-api`
 | HTTP contract | `Docs/specs/API_CONTRACT.md` |
 | Fase 0 bootstrap | `Docs/specs/fase-0-bootstrap.md` |
 | Fases 1–5 | `Docs/specs/fase-*.md` |
+| Fase 6 Idempotency-Key | `Docs/specs/fase-6-idempotency-key.md` |
 | How to test | `Docs/runbooks/testes.md` |
 | Composable pattern | `.cursor/skills/vue-api-composable/SKILL.md` |
 

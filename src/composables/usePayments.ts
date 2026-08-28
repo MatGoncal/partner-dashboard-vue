@@ -1,5 +1,10 @@
 import { ref, computed, onUnmounted } from 'vue';
 import { apiRequest } from '@/lib/apiClient';
+import {
+  clearMemoryIdempotencyKey,
+  paymentIdempotencyKey,
+  type IdempotencyMemory,
+} from '@/lib/idempotencyKey';
 import type {
   CreatePaymentPayload,
   Payment,
@@ -29,6 +34,7 @@ export function usePayments() {
   const filters = ref<PaymentFilters>({ ...DEFAULT_FILTERS });
   const currentPayment = ref<Payment | null>(null);
   const polling = ref(false);
+  const createKeyMemory: IdempotencyMemory = { current: null };
 
   let pollTimer: ReturnType<typeof setInterval> | null = null;
 
@@ -72,12 +78,17 @@ export function usePayments() {
   async function createPayment(payload: CreatePaymentPayload): Promise<Payment | null> {
     loading.value = true;
     error.value = null;
+    const idempotencyKey = paymentIdempotencyKey(payload.external_id, createKeyMemory);
     try {
       const payment = await apiRequest<Payment>('/payments', {
         method: 'POST',
         body: JSON.stringify(payload),
+        headers: { 'Idempotency-Key': idempotencyKey },
       });
       currentPayment.value = payment;
+      if (!payload.external_id?.trim()) {
+        clearMemoryIdempotencyKey(createKeyMemory);
+      }
       return payment;
     } catch (e) {
       error.value = e instanceof Error ? e.message : 'Failed to create payment';
